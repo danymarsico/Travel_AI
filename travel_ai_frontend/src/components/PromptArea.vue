@@ -44,10 +44,10 @@ export default {
             this.$store.state.city = this.travelInfo.city;
             this.$store.state.days = this.travelInfo.days;
             this.$router.push( {name: 'travel', params: {city: this.travelInfo.city} });
-            /*travelService.sendTravelInfo(this.travelInfo)
+            travelService.sendTravelInfo(this.travelInfo)
             .then((response) => {
               
-            })*/
+            })
 
           }
           
