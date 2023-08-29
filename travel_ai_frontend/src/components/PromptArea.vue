@@ -16,7 +16,7 @@
 </template>
 
 <script>
-//import travelService from '../services/TravelService';
+import TravelService from '../services/TravelService';
 export default {
   data() {
     return {
@@ -44,9 +44,9 @@ export default {
             this.$store.state.city = this.travelInfo.city;
             this.$store.state.days = this.travelInfo.days;
             this.$router.push( {name: 'travel', params: {city: this.travelInfo.city} });
-            travelService.sendTravelInfo(this.travelInfo)
+            TravelService.sendTravelInfo(this.travelInfo)
             .then((response) => {
-              
+              this.$store.commit('SET_TRAVEL_PLAN', response.data);
             })
 
           }

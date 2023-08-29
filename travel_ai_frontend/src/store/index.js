@@ -4,11 +4,14 @@ export default createStore({
   state: {
     city:"",
     days:0,
-    response: ""
+    travelPlan: ""
   },
   getters: {
   },
   mutations: {
+    SET_TRAVEL_PLAN(state, payload) {
+      state.travelPlan = payload;
+    }
   },
   actions: {
   },
