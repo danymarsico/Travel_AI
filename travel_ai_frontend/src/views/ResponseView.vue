@@ -1,11 +1,13 @@
 <template>
     <div class="response">
-        <h1>Response View</h1>
+        <header-el />
     </div>
 </template>
 
 <script>
+import HeaderEl from '../components/HeaderEl.vue'
 export default {
+  components: { HeaderEl },
 
 }
 </script>

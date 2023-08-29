@@ -1,15 +1,18 @@
 <template>
   <div class="home">
+    <header-el />
     <blurred-background />
   </div>
 </template>
 
 <script>
 import BlurredBackground from '@/components/BlurredBackground.vue'
+import HeaderEl from '../components/HeaderEl.vue'
 export default {
   name: 'HomeView',
   components: {
     BlurredBackground,
+    HeaderEl,
   }
 }
 </script>
