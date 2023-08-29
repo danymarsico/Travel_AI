@@ -1,18 +1,23 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <blurred-background />
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import BlurredBackground from '@/components/BlurredBackground.vue'
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
+    BlurredBackground,
   }
 }
 </script>
+
+<style>
+.home {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensure the page takes up at least the viewport height */
+}
+</style>
