@@ -22,7 +22,27 @@ export default {
     };
   },
 
-  
+  mounted() {
+    this.setupImageTransition();
+  },
+
+  methods: {
+    setupImageTransition() {
+      setInterval(() => {
+        this.currentImageIndex = (this.currentImageIndex + 1) % this.imgs.length;
+      }, 8000); // Interval for changing the background image
+    },
+  },
+
+  computed: {
+    currentImageStyle() {
+      return `url(${this.imgs[this.currentImageIndex]})`;
+    },
+    nextImageStyle() {
+      const nextIndex = (this.currentImageIndex + 1) % this.imgs.length;
+      return `url(${this.imgs[nextIndex]})`;
+    },
+  },
 };
 </script>
 
