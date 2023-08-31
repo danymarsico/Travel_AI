@@ -46,7 +46,7 @@ export default {
             this.$router.push( {name: 'travel', params: {city: this.travelInfo.city} });
             TravelService.sendTravelInfo(this.travelInfo)
             .then((response) => {
-              this.$store.commit('SET_TRAVEL_PLAN', response.data);
+              this.$store.commit('SET_TRAVEL_PLAN', response.data.content);
             })
 
           }
