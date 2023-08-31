@@ -1,7 +1,7 @@
 <template>
   <footer id="footer">
     <ul class="copyright">
-      <li>- &copy; Travel-AI 2023  -</li>
+      <li>- &copy; Travel-AI 2023 By Daniele Marsico -</li>
     </ul>
   </footer>
 </template>
