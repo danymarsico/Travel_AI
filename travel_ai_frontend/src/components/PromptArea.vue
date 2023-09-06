@@ -11,12 +11,11 @@
       <input v-model="this.travelInfo.days" type="number" id="days" placeholder="Days" min="0" />
     </div>
 
-    <button id="submitBtn" @click="loadResult">Plan My Vacation</button>
+    <button id="submitBtn" @click="sendInfo">Plan My Vacation</button>
   </div>
 </template>
 
 <script>
-import TravelService from '../services/TravelService';
 export default {
   data() {
     return {
@@ -37,18 +36,13 @@ export default {
             this.errorMessage = '';
           }
         },
-        loadResult() {
+        sendInfo() {
           if(this.travelInfo.city === '' || this.travelInfo.days === 0){
             alert('Please enter a destination and number of days')
           } else{
-            this.$store.state.city = this.travelInfo.city;
-            this.$store.state.days = this.travelInfo.days;
+            this.$store.state.travelInfo.city = this.travelInfo.city;
+            this.$store.state.travelInfo.days = this.travelInfo.days;
             this.$router.push( {name: 'travel', params: {city: this.travelInfo.city} });
-            TravelService.sendTravelInfo(this.travelInfo)
-            .then((response) => {
-              this.$store.commit('SET_TRAVEL_PLAN', response.data.content);
-            })
-
           }
           
         }

@@ -1,12 +1,18 @@
 <template>
   <div id="response">
-    <textarea v-model="this.$store.state.travelPlan" id="responsebox"></textarea>
+    <textarea v-model="this.$store.state.travelInfo.travelPlan" id="responsebox"></textarea>
   </div>
 </template>
 
 <script>
+import travelService from '../services/TravelService'
 export default {
-
+created() {
+travelService.sendTravelInfo(this.$store.state.travelInfo)
+            .then((response) => {
+              this.$store.commit('SET_TRAVEL_PLAN', response.data.content);
+            })
+}
 }
 </script>
 
