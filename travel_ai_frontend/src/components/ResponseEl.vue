@@ -1,17 +1,28 @@
 <template>
   <div id="response">
-    <textarea v-model="this.$store.state.travelInfo.travelPlan" id="responsebox"></textarea>
+    <img v-if="loading" src="../assets/loading.gif" alt="Loading..." />
+    <textarea v-else v-model="this.$store.state.travelInfo.travelPlan" id="responsebox"></textarea>
   </div>
 </template>
 
 <script>
 import travelService from '../services/TravelService'
 export default {
+  data() {
+    return {
+      loading: true,
+    }
+  },
 created() {
 travelService.sendTravelInfo(this.$store.state.travelInfo)
             .then((response) => {
               this.$store.commit('SET_TRAVEL_PLAN', response.data.content);
+              this.loading = false;
             })
+            .catch((error) => {
+              console.error("Error sending Travel Info: ", error);
+              this.loading = false;
+            });
 }
 }
 </script>
