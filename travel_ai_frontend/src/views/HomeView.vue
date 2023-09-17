@@ -3,7 +3,7 @@
     <header-el />
     <blurred-background />
     <div class="content">
-      <prompt-area />
+      <prompt-area class="prompt-area" />
     </div>
     <footer-el />
   </div>
@@ -29,7 +29,7 @@ export default {
 .home {
   display: flex;
   flex-direction: column;
-  min-height: 100vh; /* Ensure the page takes up at least the viewport height */
+  min-height: 100vh;
 }
 .content {
   flex: 1; /* Allow the content to expand and push the footer to the bottom */
@@ -37,9 +37,10 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
-/* Add styling for the footer */
+
 footer-el {
-  margin-top: auto; /* Push the footer to the bottom */
+  margin-top: auto;
 }
 </style>

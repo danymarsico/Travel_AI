@@ -1,7 +1,15 @@
 <template>
   <div id="response">
-    <img v-if="loading" src="../assets/loading.gif" alt="Loading..." />
+    <div class="response-container" v-if="loading">
+      <p class="loading-text">
+        We are currently planning your next trip to {{ this.$store.state.travelInfo.city }}.
+        Start preparing your luggages!
+      </p>
+      <img v-if="loading" src="../assets/loading.gif" alt="Loading..." />
+    </div>
+    
     <textarea v-else v-model="this.$store.state.travelInfo.travelPlan" id="responsebox"></textarea>
+    <button v-if="!loading" @click="planNewVacation">Plan another vacation</button>
   </div>
 </template>
 
@@ -11,6 +19,12 @@ export default {
   data() {
     return {
       loading: true,
+    }
+  },
+  methods: {
+    planNewVacation() {
+      this.$store.commit('CLEAR_TRAVEL_INFO');
+      this.$router.push({name: 'home'});
     }
   },
 created() {
