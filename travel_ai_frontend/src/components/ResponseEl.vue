@@ -9,12 +9,14 @@
     </div>
     
     <textarea v-else v-model="this.$store.state.travelInfo.travelPlan" id="responsebox"></textarea>
-    <button v-if="!loading" @click="planNewVacation">Plan another vacation</button>
+    <button v-if="!loading" @click="planNewVacation">Plan Another Vacation</button>
+    <button v-if="!loading" @click="downloadTravelPlan">Download Travel Plan</button>
   </div>
 </template>
 
 <script>
 import travelService from '../services/TravelService'
+import jsPDF from 'jspdf';
 export default {
   data() {
     return {
@@ -25,6 +27,21 @@ export default {
     planNewVacation() {
       this.$store.commit('CLEAR_TRAVEL_INFO');
       this.$router.push({name: 'home'});
+    },
+    downloadTravelPlan() {
+      if(this.$store.state.travelInfo.travelPlan !== ""){
+      const doc = new jsPDF();
+      const text = this.$store.state.travelInfo.travelPlan;
+
+      doc.setFont('helvetica');
+      doc.setFontSize(12);
+
+      doc.text(text,10,10);
+
+      doc.save('TravelPlan.pdf');
+      } else {
+        alert("Sorry, there's nothing to download!")
+      }
     }
   },
 created() {
