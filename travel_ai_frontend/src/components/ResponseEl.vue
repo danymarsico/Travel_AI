@@ -8,9 +8,13 @@
       <img v-if="loading" src="../assets/loading.gif" alt="Loading..." />
     </div>
     
-    <textarea v-else v-model="this.$store.state.travelInfo.travelPlan" id="responsebox"></textarea>
-    <button v-if="!loading" @click="planNewVacation">Plan Another Vacation</button>
-    <button v-if="!loading" @click="downloadTravelPlan">Download Travel Plan</button>
+    <div class="textarea-container" v-else>
+      <textarea v-model="this.$store.state.travelInfo.travelPlan" id="responsebox"></textarea>
+      <div class="button-container">
+        <button @click="planNewVacation">Plan Another Vacation</button>
+        <button @click="downloadTravelPlan">Download Travel Plan</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -28,21 +32,56 @@ export default {
       this.$store.commit('CLEAR_TRAVEL_INFO');
       this.$router.push({name: 'home'});
     },
-    downloadTravelPlan() {
-      if(this.$store.state.travelInfo.travelPlan !== ""){
-      const doc = new jsPDF();
-      const text = this.$store.state.travelInfo.travelPlan;
 
-      doc.setFont('helvetica');
-      doc.setFontSize(12);
+    async downloadTravelPlan() {
+      if (this.$store.state.travelInfo.travelPlan !== '') {
+    const text = this.$store.state.travelInfo.travelPlan;
+    const doc = new jsPDF();
+    const webAppName = 'Travel AI';
 
-      doc.text(text,10,10);
+    doc.setFontSize(14);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(0, 0, 0);
 
-      doc.save('TravelPlan.pdf');
-      } else {
-        alert("Sorry, there's nothing to download!")
+    const textWidth = doc.getTextWidth(webAppName);
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const centerXAxis = (pageWidth - textWidth) / 2;
+
+    doc.text(webAppName, centerXAxis, 15)
+
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'normal');
+
+    const paragraphs = text.split('\n');
+    const contentWidth = doc.internal.pageSize.getWidth() - 20;
+    
+    const linesPerPage = Math.floor((doc.internal.pageSize.getHeight() - 28) / 12);
+    let currentLine = 0;
+
+    for (const paragraph of paragraphs) {
+      const lines = doc.splitTextToSize(paragraph, contentWidth);
+      for (const line of lines) {
+        if (currentLine >= linesPerPage) {
+          doc.addPage();
+          currentLine = 0;
+        }
+        doc.text(line, 10, 28 + currentLine * 12);
+        currentLine++;
       }
     }
+
+    const pdfBlob = doc.output('blob');
+    const blobUrl = URL.createObjectURL(pdfBlob);
+
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = 'travel_AI_plan.pdf';
+    link.click();
+  } else {
+    alert("Sorry, there's nothing to download!");
+  }
+},
+
   },
 created() {
 travelService.sendTravelInfo(this.$store.state.travelInfo)
@@ -66,9 +105,16 @@ travelService.sendTravelInfo(this.$store.state.travelInfo)
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
 }
 
+.textarea-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center the textarea and buttons vertically */
+  gap: 20px; /* Add some spacing between textarea and buttons */
+}
+
 #responsebox {
-  width: 600px;
-  height: 400px; /* Reduced the height to fit better with the design */
+  width: 100%; /* Make the textarea full width */
+  height: 400px; /* Adjust the height as needed */
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc; /* Light gray border */
@@ -82,5 +128,31 @@ travelService.sendTravelInfo(this.$store.state.travelInfo)
 
 #responsebox:focus {
   border-color: #4A90E2; /* Border color on focus */
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between; /* Space buttons evenly */
+  width: 100%; /* Make the button container full width */
+}
+
+.button-container button {
+  flex: 1;
+  margin: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4A90E2;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #357EBD;
 }
 </style>
