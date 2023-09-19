@@ -9,6 +9,7 @@
     </div>
     
     <div class="textarea-container" v-else>
+      <div></div>
       <textarea v-model="this.$store.state.travelInfo.travelPlan" id="responsebox"></textarea>
       <div class="button-container">
         <button @click="planNewVacation">Plan Another Vacation</button>
@@ -99,41 +100,50 @@ travelService.sendTravelInfo(this.$store.state.travelInfo)
 
 <style>
 #response {
-  background-color: #f1f1f1; /* Light gray background */
+  width: 70%;
+  background-color: #f1f1f1;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .textarea-container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center the textarea and buttons vertically */
-  gap: 20px; /* Add some spacing between textarea and buttons */
+  align-items: center;
+  gap: 20px;
+}
+
+.loading-text {
+  font-size: 18px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #6c6a6a;
 }
 
 #responsebox {
-  width: 100%; /* Make the textarea full width */
-  height: 400px; /* Adjust the height as needed */
+  width: 100%;
+  height: 600px;
   padding: 10px;
   font-size: 16px;
-  border: 1px solid #ccc; /* Light gray border */
+  border: 1px solid #ccc;
   border-radius: 5px;
   outline: none;
 }
 
 #responsebox::placeholder {
-  color: #999; /* Placeholder text color */
+  color: #999;
 }
 
 #responsebox:focus {
-  border-color: #4A90E2; /* Border color on focus */
+  border-color: #4A90E2;
 }
 
 .button-container {
   display: flex;
-  justify-content: space-between; /* Space buttons evenly */
-  width: 100%; /* Make the button container full width */
+  justify-content: space-between;
+  width: 100%;
 }
 
 .button-container button {
